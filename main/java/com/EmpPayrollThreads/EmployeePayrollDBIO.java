@@ -241,4 +241,22 @@ public class EmployeePayrollDBIO {
 			}
 		}
 	}
+	
+	public void updateEmployeeDataUsingThreads(EmployeePayrollData employeeObj) {
+		Map<Integer,Boolean> addStatus = new HashMap<>();
+		Runnable task = ()->{
+			addStatus.put(employeeObj.hashCode(),false);
+			this.updateDataUsingPreparedStatement(employeeObj.name,employeeObj.salary);
+			addStatus.put(employeeObj.hashCode(),true);
+		};
+		Thread thread=new Thread(task,employeeObj.name);
+		thread.start();
+		while(addStatus.containsValue(false)) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
