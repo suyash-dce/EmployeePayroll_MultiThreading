@@ -11,7 +11,7 @@ public class EmployeePayrollDBIO {
 	private PreparedStatement payrollDataStatement;
 	private static EmployeePayrollDBIO payrollDBobj;
 	
-	private Connection getConnection() throws SQLException {
+	private synchronized Connection getConnection() throws SQLException {
 		String jdbcURL = "jdbc:mysql://localhost:3306/employee_payroll?useSSL=false";
 		String userName = "root";
 		String password = "jain1234";
