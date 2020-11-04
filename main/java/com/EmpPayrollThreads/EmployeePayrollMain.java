@@ -132,8 +132,20 @@ public class EmployeePayrollMain {
 	}
 	
 	public void addEmployeesToPayrollUsingThreads(List<EmployeePayrollData> EmpList) {
-		for (EmployeePayrollData emp:EmpList) {
-			payrollDBobj.addEmployeesToPayrollUsingThreads(emp);
+		Runnable task= () ->
+		{
+			for (EmployeePayrollData emp:EmpList) {
+				payrollDBobj.addEmployeesToPayrollUsingThreads(emp);
+			}
+		};
+		Thread thread=new Thread(task);
+		thread.start();
+		while(EmpList.isEmpty()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
