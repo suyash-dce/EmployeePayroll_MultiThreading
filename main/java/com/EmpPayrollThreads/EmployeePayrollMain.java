@@ -148,6 +148,24 @@ public class EmployeePayrollMain {
 			}
 		}
 	}
+	
+	public void updateEmployeeDataUsingThreads(List<EmployeePayrollData> EmpList) {
+		Runnable task= () ->
+		{
+			for (EmployeePayrollData emp:EmpList) {
+				payrollDBobj.updateEmployeeDataUsingThreads(emp);
+			}
+		};
+		Thread thread=new Thread(task);
+		thread.start();
+		while(EmpList.isEmpty()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	//Main Method
 	public static void main(String[] args) {
