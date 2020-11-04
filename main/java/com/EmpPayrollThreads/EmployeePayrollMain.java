@@ -1,7 +1,5 @@
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class EmployeePayrollMain {
 
@@ -124,12 +122,18 @@ public class EmployeePayrollMain {
 	}
 
 	public void addEmployeeToPayroll(String name, double salary, LocalDate startDate, String gender) {
-		employeeDataList.add(payrollDBobj.addEmployeeToPayroll(name,salary,startDate,gender));
+		employeeDataList.add(payrollDBobj.addEmployeeToPayrollWithDeductions(name,salary,startDate,gender));
 	}
 
 	public void addEmployeeToPayroll(List<EmployeePayrollData> EmpList) {
 		for (EmployeePayrollData emp:EmpList) {
 			employeeDataList.add(payrollDBobj.addEmployeeToPayroll(emp.name,emp.salary,emp.startDate,"M"));
+		}
+	}
+	
+	public void addEmployeesToPayrollUsingThreads(List<EmployeePayrollData> EmpList) {
+		for (EmployeePayrollData emp:EmpList) {
+			payrollDBobj.addEmployeesToPayrollUsingThreads(emp);
 		}
 	}
 
