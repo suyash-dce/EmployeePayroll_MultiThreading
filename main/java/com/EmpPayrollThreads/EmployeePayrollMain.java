@@ -98,7 +98,7 @@ public class EmployeePayrollMain {
 		}
 	}
 
-	private EmployeePayrollData getEmployeePayrollData(String name) {
+	EmployeePayrollData getEmployeePayrollData(String name) {
 		EmployeePayrollData employeePayrollData = this.employeeDataList.stream()
 				.filter(employee->employee.name.equals(name))
 				.findFirst()
@@ -171,7 +171,7 @@ public class EmployeePayrollMain {
 	public void addEmployeeToPayroll(EmployeePayrollData emp) {
 		addEmployeeToPayroll(emp.name, emp.salary,emp.startDate, "M");
 	}
-	
+
 	public void updateEmployeeDataInJSONUsingThreads(List<EmployeePayrollData> EmpList) {
 		Map<Integer,Boolean> addStatus = new HashMap<>();
 		Runnable task = ()->{
@@ -190,6 +190,11 @@ public class EmployeePayrollMain {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void updateEmployeeSalary(String name, double salary) {
+		EmployeePayrollData emp =  this.getEmployeePayrollData(name);
+		if(emp!=null) emp.salary=salary;
 	}
 
 	//Main Method
