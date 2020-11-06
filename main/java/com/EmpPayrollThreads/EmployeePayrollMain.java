@@ -197,6 +197,10 @@ public class EmployeePayrollMain {
 		if(emp!=null) emp.salary=salary;
 	}
 
+	public void deleteEmployeePayroll(String name) {
+		employeeDataList.remove(getEmployeePayrollData(name));
+	}
+
 	//Main Method
 	public static void main(String[] args) {
 		EmployeePayrollMain employeeFunction = new EmployeePayrollMain();
