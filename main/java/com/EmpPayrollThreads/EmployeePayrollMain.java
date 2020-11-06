@@ -131,7 +131,7 @@ public class EmployeePayrollMain {
 			employeeDataList.add(payrollDBobj.addEmployeeToPayroll(emp.name,emp.salary,emp.startDate,"M"));
 		}
 	}
-	
+
 	public void addEmployeesToPayrollUsingThreads(List<EmployeePayrollData> EmpList) {
 		Runnable task= () ->
 		{
@@ -149,7 +149,7 @@ public class EmployeePayrollMain {
 			}
 		}
 	}
-	
+
 	public void updateEmployeeDataUsingThreads(List<EmployeePayrollData> EmpList) {
 		Runnable task= () ->
 		{
@@ -160,6 +160,30 @@ public class EmployeePayrollMain {
 		Thread thread=new Thread(task);
 		thread.start();
 		while(EmpList.isEmpty()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void addEmployeeToPayroll(EmployeePayrollData emp) {
+		addEmployeeToPayroll(emp.name, emp.salary,emp.startDate, "M");
+	}
+	
+	public void updateEmployeeDataInJSONUsingThreads(List<EmployeePayrollData> EmpList) {
+		Map<Integer,Boolean> addStatus = new HashMap<>();
+		Runnable task = ()->{
+			for(EmployeePayrollData emp:EmpList) {
+				addStatus.put(emp.hashCode(),false);
+				addEmployeeToPayroll(emp);
+				addStatus.put(emp.hashCode(),true);
+			}
+		};
+		Thread thread=new Thread(task);
+		thread.start();
+		while(addStatus.containsValue(false)) {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
