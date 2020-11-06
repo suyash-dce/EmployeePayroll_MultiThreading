@@ -99,4 +99,9 @@ public class EmployeePayrollRestAssureTest {
 		int statusCode = respose.getStatusCode();
 		assertEquals(200, statusCode);
 	}
+	
+	@Test
+	public void givenEmpDataInJSONServer_WhenRetrieved_ShouldMatchCount() {
+		assertEquals(2, employeeFunction.countEntries(IOCommand.REST_IO));
+	}
 }

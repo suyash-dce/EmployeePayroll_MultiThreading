@@ -45,7 +45,7 @@ public class EmployeePayrollMain {
 	 * @param ioType <br> CONSOLE_IO or FILE_IO
 	 */
 	public void writeEmployeeData(IOCommand ioType) {
-		if(ioType.equals(ioType.CONSOLE_IO)) {
+		if(ioType.equals(IOCommand.CONSOLE_IO)) {
 			System.out.println("Writing Employee Payroll Data to Console.");
 			for (EmployeePayrollData employee:employeeDataList) {
 				employee.printDataFileIO();
