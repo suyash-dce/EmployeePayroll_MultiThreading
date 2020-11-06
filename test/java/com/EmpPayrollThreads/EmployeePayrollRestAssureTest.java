@@ -104,4 +104,18 @@ public class EmployeePayrollRestAssureTest {
 	public void givenEmpDataInJSONServer_WhenRetrieved_ShouldMatchCount() {
 		assertEquals(2, employeeFunction.countEntries(IOCommand.REST_IO));
 	}
+	
+	@Test
+	public void givenEmployeeToDelete_WhenDeleted_shouldMatch200ResponseAndCount() {
+		EmployeePayrollData emp = employeeFunction.getEmployeePayrollData("Sarvagya");
+		RequestSpecification requestSpecification = RestAssured.given();
+		requestSpecification.header("Content-Type","application/json");
+		Response response = requestSpecification.delete("/employee_payroll/"+emp.id);
+		
+		int statusCode = response.getStatusCode();
+		assertEquals(200,statusCode);
+		
+		employeeFunction.deleteEmployeePayroll(emp.name);
+		assertEquals(5,employeeFunction.countEntries(IOCommand.REST_IO));
+	}
 }
